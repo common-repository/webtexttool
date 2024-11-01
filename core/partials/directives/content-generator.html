@@ -1,0 +1,35 @@
+<div class="modal-body content-generator-modal" cg-busy="validationPromise">
+    <div class="tm-modal-enhance">
+        <section class="tags">
+            <div ng-if="jsonDataSource.suggestions.length == 0"><p>{{jsonDataSource.message}}</p></div>
+            <div ng-repeat="item in jsonDataSource.suggestions" class="tag tm-suggestion" ng-style="item.word == jsonDataSource.generated && {'background-color':'rgb(31, 125, 196)','color':'rgb(255, 255, 255)'} || {'background-color':'rgba(31, 125, 196, 0.2)','color':'rgb(0, 0, 0)'}">
+                <section class="content">
+                    <span ng-click="selectAiSuggestion(item.word)">{{item.word}}</span>
+                </section>
+            </div>
+            <div class="ai-error" ng-if="jsonDataSource.error">
+                <i class="fa fa-warning"></i> {{jsonDataSource.error}}
+            </div>
+        </section>
+    </div>
+</div>
+<div class="modal-footer content-generator-modal-footer">
+    <section class="buttons">
+        <div class="feedback-buttons">
+            <button class="small-thumbs pull-right" title="Copy Text to clipboard" ng-click="copyGeneratedText()"><i class="fa fa-copy"></i></button>
+            <button class="small-thumbs pull-right divider"> |</button>
+            <button class="small-thumbs pull-right" ng-click="feedback('up')"><i class="fa fa-thumbs-up"></i></button>
+            <button class="small-thumbs pull-right" ng-click="feedback('down')"><i class="fa fa-thumbs-down"></i></button>
+        </div>
+
+        <button class="btn btn-default xs-small-secondary" ng-click="generateEnh()">
+            <span class="min-width-100"><i class="fa fa-magic" aria-hidden="true"></i>{{data.Resources.RetryLabel}}</span>
+        </button>
+        <button class="btn btn-default xs-small-secondary" ng-click="discard()">
+            <span class="min-width-100">{{data.Resources.ContentGeneratorDiscardButton}}</span>
+        </button>
+        <div class="btn-group">
+            <button type="button" class="btn btn-primary xs-small-primary" ng-click="replace()">{{data.Resources.ContentGeneratorReplaceButton}}</button>
+        </div>
+    </section>
+</div>

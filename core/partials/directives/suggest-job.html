@@ -1,0 +1,105 @@
+<div>
+    <div class="modal-header">
+        <button type="button" class="close" data-ng-click="cancel()" ng-if="!modalOptions.closeButtonText"><span
+                aria-hidden="true">&times;</span></button>
+        <h3>{{data.Resources.SuggestJobSubTitle}}</h3>
+    </div>
+    <div class="modal-body">
+        <form class="form-horizontal" role="form" name="forms.suggestJobForm" id="forms.suggestJobForm"
+              cg-busy="searchJobsPromise">
+
+            <div class="form-group">
+                <div class="col-md-3">
+                    <div ng-bind-html="data.Resources.RecruitmentModalCountryProvinceLabel"></div>
+                </div>
+                <div class="col-md-5 no-padding-right" ng-keypress="selectOnKeyPress($event)">
+                    <button type="button" class="btn btn-default wtt-dropdown-toggle btn-dropdown form-control"
+                            data-toggle="wtt-dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="flag flag-{{model.KeywordSource.Country}}"></i> {{model.KeywordSource.Name}} <span
+                            class="caret"></span>
+                    </button>
+                    <ul class="wtt-dropdown-menu keyword-country-list" id="ul-job-keywordSources">
+                        <li id="li-none1"><a href="javascript:;"><i></i> {{data.Resources.SelectLabel}}</a></li>
+                        <li id="li-{{keywordSource.Value}}" ng-repeat="keywordSource in KeywordSources"
+                            ng-class="{active: model.KeywordSource.Key == keywordSource.Key}">
+                            <a href="javascript:;" ng-click="selectKeywordSource(keywordSource)"><i
+                                    class="flag flag-{{keywordSource.Country}}"></i> {{keywordSource.Name}}</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-md-4 location-search" ng-if="model.KeywordSource.Country == 'nl'">
+                    <button type="button" class="btn btn-default wtt-dropdown-toggle btn-dropdown form-control"
+                            data-toggle="wtt-dropdown" aria-haspopup="true" aria-expanded="false">
+                        {{model.Province || data.Resources.SelectLabel }} <span class="caret"></span>
+                    </button>
+                    <ul class="wtt-dropdown-menu keyword-country-list" id="ul-job-province">
+                        <li id="li-none2"><a href="javascript:;" ng-click="selectProvince(null)"><i></i>
+                            {{data.Resources.SelectLabel}}</a></li>
+                        <li id="li-{{province}}" ng-repeat="province in provinceList"
+                            ng-class="{active: model.Province == province}">
+                            <a href="javascript:;" ng-click="selectProvince(province)"> {{province}}</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-3">
+                    <div ng-bind-html="data.Resources.RecruitmentModalTitleLabel"></div>
+                </div>
+                <div class="col-md-9">
+                    <input id="inputTitle" name="inputTitle" placeholder="Title" ng-model="model.Title"
+                           ng-change="onTitleChanged()"
+                           title="Title" autocomplete="off"
+                           class="wtt-dropdown-toggle btn-dropdown form-control" data-toggle="wtt-dropdown"
+                           aria-haspopup="true"
+                           aria-expanded="false" required style="width: 380px !important; height: 40px;"/>
+
+                    <ul class="wtt-dropdown-menu keyword-country-list" id="ul-job-title">
+                        <li id="li-none3"><a href="javascript:;"><i></i> {{data.Resources.SelectLabel}}</a></li>
+                        <li id="li-{{jobTitle}}" ng-repeat="jobTitle in jobTitles"
+                            ng-class="{active: model.Title == jobTitle}">
+                            <a href="javascript:;" ng-click="selectJobTitle(jobTitle)"> {{jobTitle}}</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-3">
+                    <div ng-bind-html="data.Resources.RecruitmentModalLevelLabel"></div>
+                </div>
+                <div class="col-md-9">
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-default wtt-dropdown-toggle" data-toggle="wtt-dropdown"
+                                aria-haspopup="true" aria-expanded="false">
+                            <b>{{model.Level || data.Resources.SelectLabel}}</b>
+                            <span class="caret"></span>
+                        </button>
+                        <ul class="wtt-dropdown-menu dropdown-custom" style="right: auto !important;">
+                            <li id="li-none"><a href="javascript:;" ng-click="selectLevel(null)"><i></i>
+                                {{data.Resources.SelectLabel}}</a></li>
+                            <li ng-repeat="level in levelList">
+                                <a ng-click="selectLevel(level.Value)" href="javascript:;">{{level.Text}}</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group" ng-if="errorMsg != null">
+                <div class="col-sm-12">
+                    <div class="alert alert-danger alert-slim">
+                        <span ng-bind-html="errorMsg"></span>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button class="btn" type="button" data-ng-click="cancel()" ng-if="!hideClose">
+            <span class="min-width-100">{{data.Resources.CancelLabel}}</span>
+        </button>
+        <button type="submit" class="wtt-btn wtt-btn-default disable-when-busy" data-ng-click="save()">
+            <span class="min-width-100">{{data.Resources.SaveLabel}}</span>
+        </button>
+    </div>
+</div>
